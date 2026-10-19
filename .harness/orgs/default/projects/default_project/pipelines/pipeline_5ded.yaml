@@ -3,6 +3,6 @@ pipeline:
     - steps:
         - run:
             script: "pwd\r\nls -la"
-            shell: bash
+            shell: sh
           name: pwd
           id: pwd
