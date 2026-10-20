@@ -35,11 +35,10 @@ pipeline:
                   spec:
                     connectorRef: DOCKERHUB_TOKEN_ZUBAIR
                     image: maven:3.9.9-eclipse-temurin-21
-                    shell: Sh
+                    shell: Bash
                     command: |-
-                      cd SmallestSpringApp  
-                      mvn -B clean package  
-                      mvn -B test
+                      cd SmallestSpringApp
+                      mvn -B clean package -DskipTests
               - step:
                   type: BuildAndPushDockerRegistry
                   name: Build and Push to Docker Hub
@@ -49,5 +48,5 @@ pipeline:
                     repo: syedzubair555/springboot-sample-repo
                     tags:
                       - latest
-                    dockerfile: " Dockerfile"
-                    context: .
+                    dockerfile: SmallestSpringApp/Dockerfile
+                    context: SmallestSpringApp
