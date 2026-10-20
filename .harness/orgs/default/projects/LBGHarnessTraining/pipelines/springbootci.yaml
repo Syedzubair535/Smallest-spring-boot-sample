@@ -34,7 +34,7 @@ pipeline:
                   identifier: Maven_Compile_and_Package
                   spec:
                     connectorRef: DOCKERHUB_TOKEN_ZUBAIR
-                    image: "image: maven:3.8.8-openjdk-8"
+                    image: maven:3.8.8-openjdk-8
                     shell: Bash
                     command: |-
                       cd SmallestSpringApp
