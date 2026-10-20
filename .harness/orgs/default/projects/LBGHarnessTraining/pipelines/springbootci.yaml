@@ -36,7 +36,10 @@ pipeline:
                     connectorRef: DOCKERHUB_TOKEN_ZUBAIR
                     image: maven:3.9.9-eclipse-temurin-21
                     shell: Sh
-                    command: mvn -B clean package -DskipTests
+                    command: |-
+                      cd SmallestSpringApp  
+                      mvn -B clean package  
+                      mvn -B test
               - step:
                   type: BuildAndPushDockerRegistry
                   name: Build and Push to Docker Hub
