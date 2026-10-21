@@ -7,16 +7,19 @@ pipeline:
   properties:
     ci:
       codebase:
-        connectorRef: GITHUB_CONNECTOR_SYEDZUBAIR535
-        repoName: Syedzubair535/Smallest-spring-boot-sample
+        connectorRef: GITHUB_TEST_connector
         build: <+input>
   stages:
     - stage:
         name: Build
         identifier: Build
+        description: ""
         type: CI
         spec:
           cloneCodebase: true
+          caching:
+            enabled: true
+            override: false
           platform:
             os: Linux
             arch: Amd64
@@ -30,26 +33,28 @@ pipeline:
                   name: Maven Compile and Package
                   identifier: Maven_Compile_and_Package
                   spec:
-                    connectorRef: DOCKERHUB_CONNECTOR_SYEDZUBAIR555
+                    connectorRef: DOCKERHUB_TOKEN_ZUBAIR
                     image: maven:3.9.9-eclipse-temurin-21
                     shell: Bash
                     command: |-
                       cd SmallestSpringApp
                       mvn -B clean package -DskipTests
+                      Use code with caution
               - step:
                   type: BuildAndPushDockerRegistry
-                  name: Build And Push Dockerhub
-                  identifier: Build_And_Push_Dockerhub
+                  name: Build And Push Docker hub
+                  identifier: Build_And_Push_Docker_hub
                   spec:
-                    connectorRef: DOCKERHUB_CONNECTOR_SYEDZUBAIR555
+                    connectorRef: DOCKERHUB_TOKEN_ZUBAIR
                     repo: syedzubair555/springboot-sample-rep
                     tags:
                       - latest
-                    dockerfile: SmallestSpringApp/Dockerfile
+                    dockerfile: " SmallestSpringApp/Dockerfile"
                     context: SmallestSpringApp
     - stage:
         name: Deploy to Minikube
         identifier: Deploy_to_Minikube
+        description: ""
         type: Deployment
         spec:
           deploymentType: Kubernetes
@@ -78,6 +83,7 @@ pipeline:
                   timeout: 10m
                   spec:
                     pruningEnabled: false
+        tags: {}
         failureStrategies:
           - onFailure:
               errors:
